@@ -113,7 +113,7 @@ const BurgerIcon = styled.div<{ $isOpen: boolean }>`
   div {
     width: 25px;
     height: 3px;
-    background-color: ${theme.colors.background};
+    background-color: ${theme.colors.primary};
     border-radius: 2px;
     transition: all 0.3s ease;
   }
