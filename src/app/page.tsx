@@ -145,7 +145,7 @@ const LogoWrapper = styled.div`
 const LogoText = styled.h1`
   font-size: 5rem;
   font-weight: 800;
-  color: ${theme.colors.textDark};
+  color: ${theme.colors.backgroundContent};
   text-transform: uppercase;
   letter-spacing: 2px;
 
@@ -161,7 +161,7 @@ const LogoText = styled.h1`
 const LogoSubText = styled.p`
   font-size: 1.5rem;
   font-weight: 400;
-  color: ${theme.colors.textDark};
+  color: ${theme.colors.backgroundContent};
   text-transform: uppercase;
 
   @media (max-width: 768px) {
