@@ -548,6 +548,24 @@ const ErrorMessage = styled.p`
   }
 `;
 
+const LogoDark = styled.h1`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.2rem, 4vw, 1.8rem);
+  font-weight: 700;
+  color: ${theme.colors.primary};
+  transition: color 0.3s ease;
+  flex-shrink: 0;
+  z-index: 1001;
+
+  &:hover {
+    color: #e0d8c3;
+  }
+`;
+
 const syntaxHighlighterStyle: { [key: string]: CSSProperties } = vscDarkPlus;
 
 const Playground: React.FC = () => {
@@ -648,13 +666,7 @@ const Playground: React.FC = () => {
                   </UserMessage>
                 ) : (
                   <BotMessage key={index}>
-                    <Image
-                      src="/images/brain.png"
-                      alt="Bot Icon"
-                      width={24}
-                      height={24}
-                      style={{ flexShrink: 0 }}
-                    />
+                    <LogoDark>...</LogoDark>
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
                       components={{
@@ -690,13 +702,7 @@ const Playground: React.FC = () => {
               )}
               {isLoading && (
                 <BotMessage>
-                  <Image
-                    src="/images/brain.png"
-                    alt="Bot Icon"
-                    width={24}
-                    height={24}
-                    style={{ flexShrink: 0 }}
-                  />
+                  <LogoDark>...</LogoDark>
                   Thinking...
                 </BotMessage>
               )}

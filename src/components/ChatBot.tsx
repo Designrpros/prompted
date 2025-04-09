@@ -199,7 +199,7 @@ const ErrorMessage = styled.p`
   }
 `;
 
-const Logo = styled(Link)`
+const Logo = styled.h1`
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -208,6 +208,24 @@ const Logo = styled(Link)`
   font-size: clamp(1.2rem, 4vw, 1.8rem);
   font-weight: 700;
   color: ${theme.colors.background};
+  transition: color 0.3s ease;
+  flex-shrink: 0;
+  z-index: 1001;
+
+  &:hover {
+    color: #e0d8c3;
+  }
+`;
+
+const LogoDark = styled.h1`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.2rem, 4vw, 1.8rem);
+  font-weight: 700;
+  color: ${theme.colors.primary};
   transition: color 0.3s ease;
   flex-shrink: 0;
   z-index: 1001;
@@ -302,20 +320,14 @@ const Chatbot: React.FC = () => {
   return (
     <>
       <ChatbotButton onClick={() => setIsOpen(!isOpen)}>
-      <Logo href="/">...</Logo>
+      <Logo>...</Logo>
       </ChatbotButton>
       <ChatWindow $isOpen={isOpen}>
         <ChatHeader>Chatbot</ChatHeader>
         <ChatHistory ref={chatHistoryRef}>
           {messages.length === 0 && !isLoading && !error && (
             <BotMessage>
-              <Image
-                src="/images/brain.png"
-                alt="Bot Icon"
-                width={35}
-                height={24}
-                style={{ flexShrink: 0 }}
-              />
+              <LogoDark>...</LogoDark>
               <p>Welcome to the Prompted Chatbot! How can I assist you today?</p>
             </BotMessage>
           )}
@@ -328,7 +340,7 @@ const Chatbot: React.FC = () => {
               </UserMessage>
             ) : (
               <BotMessage key={index}>
-                  <Logo href="/">...</Logo>
+                  <LogoDark>...</LogoDark>
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{
@@ -364,7 +376,7 @@ const Chatbot: React.FC = () => {
           )}
           {isLoading && (
             <BotMessage>
-              <Logo href="/">...</Logo>
+              <Logo>...</Logo>
               Thinking...
             </BotMessage>
           )}
