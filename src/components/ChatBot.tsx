@@ -1,6 +1,7 @@
 // components/ChatBot.tsx
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Image from "next/image";
@@ -9,6 +10,16 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import { CSSProperties } from "react";
+
+
+// === Theme ===
+const theme = {
+  colors: {
+    background: "#fdf6e3",
+    primary: "#2A2A2A",
+  },
+};
+
 
 // Styled Components
 const ChatbotButton = styled.button`
@@ -188,6 +199,24 @@ const ErrorMessage = styled.p`
   }
 `;
 
+const Logo = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.2rem, 4vw, 1.8rem);
+  font-weight: 700;
+  color: ${theme.colors.background};
+  transition: color 0.3s ease;
+  flex-shrink: 0;
+  z-index: 1001;
+
+  &:hover {
+    color: #e0d8c3;
+  }
+`;
+
 const syntaxHighlighterStyle: { [key: string]: CSSProperties } = vscDarkPlus;
 
 const Chatbot: React.FC = () => {
@@ -273,13 +302,7 @@ const Chatbot: React.FC = () => {
   return (
     <>
       <ChatbotButton onClick={() => setIsOpen(!isOpen)}>
-        <Image
-          src="/images/brain.png"
-          alt="Chatbot Icon"
-          width={32}
-          height={32}
-          style={{ flexShrink: 0 }}
-        />
+      <Logo href="/">...</Logo>
       </ChatbotButton>
       <ChatWindow $isOpen={isOpen}>
         <ChatHeader>Chatbot</ChatHeader>
@@ -305,13 +328,7 @@ const Chatbot: React.FC = () => {
               </UserMessage>
             ) : (
               <BotMessage key={index}>
-                <Image
-                  src="/images/brain.png"
-                  alt="Bot Icon"
-                  width={35}
-                  height={24}
-                  style={{ flexShrink: 0 }}
-                />
+                  <Logo href="/">...</Logo>
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{
@@ -347,13 +364,7 @@ const Chatbot: React.FC = () => {
           )}
           {isLoading && (
             <BotMessage>
-              <Image
-                src="/images/brain.png"
-                alt="Bot Icon"
-                width={35}
-                height={24}
-                style={{ flexShrink: 0 }}
-              />
+              <Logo href="/">...</Logo>
               Thinking...
             </BotMessage>
           )}

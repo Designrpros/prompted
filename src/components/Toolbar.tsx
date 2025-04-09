@@ -166,39 +166,37 @@ const MobileNavLink = styled(Link)`
   }
 `;
 
-// === Toolbar Component ===
+
+
 const Toolbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
   return (
     <>
       <ToolbarContainer>
-        <Logo href="/">
-          <Image src="/Brain.png" alt="Prompted Logo" width={40} height={40} style={{ objectFit: "contain" }} />
-          Prompted
-        </Logo>
+        <Logo href="/">...</Logo>
         <NavLinks>
           <NavLink href="/basics">Basics</NavLink>
           <NavLink href="/patterns">Patterns</NavLink>
+          <NavLink href="/advanced">Advanced</NavLink>
+          <NavLink href="/examples">Examples</NavLink>
           <NavLink href="/playground">Playground</NavLink>
           <NavLink href="/resources">Resources</NavLink>
           <NavLink href="/index-page">Index</NavLink>
+          <NavLink href="/faq">FAQ</NavLink>
         </NavLinks>
-        <BurgerIcon $isOpen={isOpen} onClick={toggleMenu}>
-          <div />
-          <div />
-          <div />
-        </BurgerIcon>
+        <BurgerIcon $isOpen={isOpen} onClick={toggleMenu}>...</BurgerIcon>
       </ToolbarContainer>
-
       <MobileMenu $isOpen={isOpen}>
         <MobileNavLink href="/basics" onClick={toggleMenu}>Basics</MobileNavLink>
         <MobileNavLink href="/patterns" onClick={toggleMenu}>Patterns</MobileNavLink>
+        <MobileNavLink href="/advanced" onClick={toggleMenu}>Advanced</MobileNavLink>
+        <MobileNavLink href="/examples" onClick={toggleMenu}>Examples</MobileNavLink>
         <MobileNavLink href="/playground" onClick={toggleMenu}>Playground</MobileNavLink>
         <MobileNavLink href="/resources" onClick={toggleMenu}>Resources</MobileNavLink>
         <MobileNavLink href="/index-page" onClick={toggleMenu}>Index</MobileNavLink>
+        <MobileNavLink href="/faq" onClick={toggleMenu}>FAQ</MobileNavLink>
       </MobileMenu>
     </>
   );
