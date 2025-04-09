@@ -176,7 +176,7 @@ const Toolbar: React.FC = () => {
     <>
       <ToolbarContainer>
         <Logo href="/">
-          <Image src="/images/Brain.png" alt="Prompted Logo" width={40} height={40} style={{ objectFit: "contain" }} />
+          <Image src="/Brain.png" alt="Prompted Logo" width={40} height={40} style={{ objectFit: "contain" }} />
           Prompted
         </Logo>
         <NavLinks>

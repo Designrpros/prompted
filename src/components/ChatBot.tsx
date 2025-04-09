@@ -268,7 +268,7 @@ const Chatbot: React.FC = () => {
             ) : (
               <BotMessage key={index}>
                 <Image
-                  src="/images/brain.png"
+                  src="/brain.png"
                   alt="Bot Icon"
                   width={35}
                   height={24}
