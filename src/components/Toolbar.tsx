@@ -184,7 +184,7 @@ const Toolbar: React.FC = () => {
           <NavLink href="/patterns">Patterns</NavLink>
           <NavLink href="/playground">Playground</NavLink>
           <NavLink href="/resources">Resources</NavLink>
-          <NavLink href="/index">Index</NavLink>
+          <NavLink href="/index-page">Index</NavLink>
         </NavLinks>
         <BurgerIcon $isOpen={isOpen} onClick={toggleMenu}>
           <div />
@@ -198,7 +198,7 @@ const Toolbar: React.FC = () => {
         <MobileNavLink href="/patterns" onClick={toggleMenu}>Patterns</MobileNavLink>
         <MobileNavLink href="/playground" onClick={toggleMenu}>Playground</MobileNavLink>
         <MobileNavLink href="/resources" onClick={toggleMenu}>Resources</MobileNavLink>
-        <MobileNavLink href="/index" onClick={toggleMenu}>Index</MobileNavLink>
+        <MobileNavLink href="/index-page" onClick={toggleMenu}>Index</MobileNavLink>
       </MobileMenu>
     </>
   );

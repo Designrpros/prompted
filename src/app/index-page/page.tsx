@@ -360,7 +360,7 @@ const HighlightedText = styled.span`
 `;
 
 // === Main Component ===
-const Index: React.FC = () => {
+const IndexPage: React.FC = () => {
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
     welcome: false,
     "prompt-basics": false,
@@ -508,4 +508,4 @@ const Index: React.FC = () => {
   );
 };
 
-export default Index;
+export default IndexPage;
