@@ -582,7 +582,7 @@ const Playground: React.FC = () => {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${apiKey}`,
-          "HTTP-Referer": "http://localhost:3000",
+          "HTTP-Referer": "https://prompted-two.vercel.app",
           "X-Title": "Playground",
           "Content-Type": "application/json",
         },
