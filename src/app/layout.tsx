@@ -1,15 +1,21 @@
+// app/layout.tsx
 import "./globals.css";
 import Toolbar from "../components/Toolbar";
 import Chatbot from "../components/ChatBot";
 
-// Metadata for the application
+// Metadata for the application (without viewport)
 export const metadata = {
   title: "Prompted - Your AI-Powered Learning Hub",
   description: "Explore AI-driven tools, resources, and patterns with Prompted.",
-  viewport: "width=device-width, initial-scale=1.0",
   icons: {
     icon: "/favicon.ico", // Adjust path if needed
   },
+};
+
+// Separate viewport export
+export const viewport = {
+  width: "device-width",
+  initialScale: 1.0,
 };
 
 // RootLayout component with TypeScript typing

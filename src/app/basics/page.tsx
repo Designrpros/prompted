@@ -1,22 +1,11 @@
+// app/basics/page.tsx
 "use client";
 
 import { useState } from "react";
 import styled from "styled-components";
 import Toolbar from "../../components/Toolbar";
 
-// === Theme ===
-const theme = {
-  colors: {
-    backgroundLight: "#F7F4E9",
-    backgroundDark: "#2A2A2A",
-    backgroundContent: "#E8E2D1",
-    primary: "#1C2526",
-    textLight: "#333333",
-    textDark: "#FFFFFF",
-  },
-};
-
-// === Global Box Sizing Reset ===
+// Styled Components
 const GlobalStyle = styled.div`
   *,
   *::before,
@@ -25,38 +14,21 @@ const GlobalStyle = styled.div`
   }
 `;
 
-// === Styled Components ===
 const PageContainer = styled.div`
   width: 100%;
   min-height: 100vh;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-sans);
   overflow-x: hidden;
-  background: ${theme.colors.backgroundLight};
+  background: var(--color-background-light);
   margin: 0;
-  padding: 5rem 2rem 2rem 2rem; /* Account for fixed toolbar */
-
-  @media (max-width: 1200px) {
-    padding: 4.5rem 1.8rem 1.8rem 1.8rem;
-  }
-
-  @media (max-width: 1024px) {
-    padding: 4rem 1.5rem 1.5rem 1.5rem;
-  }
+  padding: 5rem 2rem 2rem 2rem;
 
   @media (max-width: 768px) {
     padding: 3rem 1rem 1rem 1rem;
   }
 
-  @media (max-width: 600px) {
-    padding: 2.5rem 0.8rem 0.8rem 0.8rem;
-  }
-
-  @media (max-width: 400px) {
+  @media ( monnaies (max-width: 400px) {
     padding: 2rem 0.5rem 0.5rem 0.5rem;
-  }
-
-  @media (max-width: 320px) {
-    padding: 1.5rem 0.3rem 0.3rem 0.3rem;
   }
 `;
 
@@ -64,320 +36,153 @@ const SubpageTitle = styled.h1`
   font-size: 3.5rem;
   font-weight: 700;
   text-align: center;
-  color: ${theme.colors.primary};
+  color: var(--color-primary);
   margin-bottom: 2rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-
-  @media (max-width: 1200px) {
-    font-size: 3.2rem;
-    margin-bottom: 1.9rem;
-  }
-
-  @media (max-width: 1024px) {
-    font-size: 3rem;
-    margin-bottom: 1.8rem;
-  }
 
   @media (max-width: 768px) {
     font-size: 2.5rem;
     margin-bottom: 1.5rem;
   }
 
-  @media (max-width: 600px) {
-    font-size: 2rem;
-    margin-bottom: 1.2rem;
-  }
-
   @media (max-width: 400px) {
     font-size: 1.8rem;
     margin-bottom: 1rem;
-  }
-
-  @media (max-width: 320px) {
-    font-size: 1.6rem;
-    margin-bottom: 0.8rem;
   }
 `;
 
 const IntroText = styled.p`
   font-size: 1.2rem;
-  color: ${theme.colors.textLight};
+  color: var(--color-text-light);
   line-height: 1.6;
   text-align: center;
   max-width: 800px;
   margin: 0 auto 2rem auto;
-  overflow-wrap: break-word; /* Prevent text overflow */
-
-  @media (max-width: 1200px) {
-    font-size: 1.15rem;
-    max-width: 750px;
-    line-height: 1.55;
-    margin-bottom: 1.9rem;
-  }
-
-  @media (max-width: 1024px) {
-    font-size: 1.1rem;
-    max-width: 700px;
-    line-height: 1.5;
-    margin-bottom: 1.8rem;
-  }
+  overflow-wrap: break-word;
 
   @media (max-width: 768px) {
     font-size: 1rem;
     max-width: 90%;
-    line-height: 1.45;
     margin-bottom: 1.5rem;
-  }
-
-  @media (max-width: 600px) {
-    font-size: 0.95rem;
-    max-width: 90%;
-    line-height: 1.4;
-    margin-bottom: 1.2rem;
   }
 
   @media (max-width: 400px) {
     font-size: 0.9rem;
-    line-height: 1.35;
     margin-bottom: 1rem;
-  }
-
-  @media (max-width: 320px) {
-    font-size: 0.85rem;
-    line-height: 1.3;
-    margin-bottom: 0.8rem;
   }
 `;
 
 const Section = styled.div`
   margin-bottom: 2rem;
-  border: 1px solid ${theme.colors.primary};
+  border: 1px solid var(--color-primary);
   border-radius: 8px;
   overflow: hidden;
-  max-width: 100%; /* Prevent overflow */
-
-  @media (max-width: 1200px) {
-    margin-bottom: 1.8rem;
-  }
-
-  @media (max-width: 1024px) {
-    margin-bottom: 1.6rem;
-  }
+  max-width: 100%;
 
   @media (max-width: 768px) {
     margin-bottom: 1.5rem;
   }
 
-  @media (max-width: 600px) {
-    margin-bottom: 1.2rem;
-  }
-
   @media (max-width: 400px) {
     margin-bottom: 1rem;
-  }
-
-  @media (max-width: 320px) {
-    margin-bottom: 0.8rem;
   }
 `;
 
 const SectionHeader = styled.div`
-  background: ${theme.colors.backgroundContent};
+  background: var(--color-background-content);
   padding: 1rem;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 100%; /* Prevent overflow */
+  max-width: 100%;
 
   &:hover {
-    background: ${theme.colors.backgroundLight};
-  }
-
-  @media (max-width: 1200px) {
-    padding: 0.9rem 0.8rem;
-  }
-
-  @media (max-width: 1024px) {
-    padding: 0.85rem 0.7rem;
+    background: var(--color-background-light);
   }
 
   @media (max-width: 768px) {
     padding: 0.8rem 0.6rem;
   }
 
-  @media (max-width: 600px) {
-    padding: 0.7rem 0.5rem;
-  }
-
   @media (max-width: 400px) {
     padding: 0.6rem 0.4rem;
-  }
-
-  @media (max-width: 320px) {
-    padding: 0.5rem 0.3rem;
   }
 `;
 
 const SectionTitle = styled.h2`
   font-size: 1.8rem;
-  color: ${theme.colors.primary};
+  color: var(--color-primary);
   margin: 0;
-  overflow-wrap: break-word; /* Prevent text overflow */
-
-  @media (max-width: 1200px) {
-    font-size: 1.7rem;
-  }
-
-  @media (max-width: 1024px) {
-    font-size: 1.6rem;
-  }
+  overflow-wrap: break-word;
 
   @media (max-width: 768px) {
     font-size: 1.4rem;
   }
 
-  @media (max-width: 600px) {
-    font-size: 1.3rem;
-  }
-
   @media (max-width: 400px) {
     font-size: 1.2rem;
-  }
-
-  @media (max-width: 320px) {
-    font-size: 1.1rem;
   }
 `;
 
 const ToggleIcon = styled.span`
   font-size: 1.5rem;
-  color: ${theme.colors.primary};
-  flex-shrink: 0; /* Prevent shrinking on small screens */
-
-  @media (max-width: 1200px) {
-    font-size: 1.4rem;
-  }
-
-  @media (max-width: 1024px) {
-    font-size: 1.35rem;
-  }
+  color: var(--color-primary);
+  flex-shrink: 0;
 
   @media (max-width: 768px) {
     font-size: 1.3rem;
   }
 
-  @media (max-width: 600px) {
-    font-size: 1.2rem;
-  }
-
   @media (max-width: 400px) {
     font-size: 1.1rem;
   }
-
-  @media (max-width: 320px) {
-    font-size: 1rem;
-  }
 `;
 
-const SectionContent = styled.div<{ isOpen: boolean }>`
-  padding: ${({ isOpen }) => (isOpen ? "1rem" : "0")};
-  height: ${({ isOpen }) => (isOpen ? "auto" : "0")};
+const SectionContent = styled.div<{ $isOpen: boolean }>`
+  padding: ${({ $isOpen }) => ($isOpen ? "1rem" : "0")};
+  height: ${({ $isOpen }) => ($isOpen ? "auto" : "0")};
   overflow: hidden;
-  background: ${theme.colors.backgroundLight};
-  max-width: 100%; /* Prevent overflow */
-
-  @media (max-width: 1200px) {
-    padding: ${({ isOpen }) => (isOpen ? "0.9rem" : "0")};
-  }
-
-  @media (max-width: 1024px) {
-    padding: ${({ isOpen }) => (isOpen ? "0.85rem" : "0")};
-  }
+  background: var(--color-background-light);
+  max-width: 100%;
 
   @media (max-width: 768px) {
-    padding: ${({ isOpen }) => (isOpen ? "0.8rem" : "0")};
-  }
-
-  @media (max-width: 600px) {
-    padding: ${({ isOpen }) => (isOpen ? "0.7rem" : "0")};
+    padding: ${({ $isOpen }) => ($isOpen ? "0.8rem" : "0")};
   }
 
   @media (max-width: 400px) {
-    padding: ${({ isOpen }) => (isOpen ? "0.6rem" : "0")};
-  }
-
-  @media (max-width: 320px) {
-    padding: ${({ isOpen }) => (isOpen ? "0.5rem" : "0")};
+    padding: ${({ $isOpen }) => ($isOpen ? "0.6rem" : "0")};
   }
 `;
 
 const SectionText = styled.p`
   font-size: 1rem;
-  color: ${theme.colors.textLight};
+  color: var(--color-text-light);
   line-height: 1.5;
   margin: 0 0 0.5rem 0;
-  max-width: 100%; /* Prevent overflow */
-  overflow-wrap: break-word; /* Break long words to prevent overflow */
-
-  @media (max-width: 1200px) {
-    font-size: 0.98rem;
-    line-height: 1.45;
-  }
-
-  @media (max-width: 1024px) {
-    font-size: 0.95rem;
-    line-height: 1.4;
-  }
+  max-width: 100%;
+  overflow-wrap: break-word;
 
   @media (max-width: 768px) {
     font-size: 0.9rem;
-    line-height: 1.3;
-  }
-
-  @media (max-width: 600px) {
-    font-size: 0.85rem;
-    line-height: 1.25;
   }
 
   @media (max-width: 400px) {
     font-size: 0.8rem;
-    line-height: 1.2;
-  }
-
-  @media (max-width: 320px) {
-    font-size: 0.75rem;
-    line-height: 1.15;
   }
 `;
 
 const ExpandedText = styled.p`
   margin: 0.5rem 0;
-  max-width: 100%; /* Prevent overflow */
-  overflow-wrap: break-word; /* Break long words to prevent overflow */
-
-  @media (max-width: 1200px) {
-    margin: 0.45rem 0;
-  }
-
-  @media (max-width: 1024px) {
-    margin: 0.4rem 0;
-  }
+  max-width: 100%;
+  overflow-wrap: break-word;
 
   @media (max-width: 768px) {
     margin: 0.4rem 0;
   }
 
-  @media (max-width: 600px) {
-    margin: 0.35rem 0;
-  }
-
   @media (max-width: 400px) {
     margin: 0.3rem 0;
-  }
-
-  @media (max-width: 320px) {
-    margin: 0.25rem 0;
   }
 `;
 
@@ -385,78 +190,42 @@ const ExpandedList = styled.ul`
   list-style-type: disc;
   padding-left: 1.5rem;
   margin: 0.5rem 0;
-  max-width: 100%; /* Prevent overflow */
-
-  @media (max-width: 1200px) {
-    padding-left: 1.4rem;
-    margin: 0.45rem 0;
-  }
-
-  @media (max-width: 1024px) {
-    padding-left: 1.3rem;
-    margin: 0.4rem 0;
-  }
+  max-width: 100%;
 
   @media (max-width: 768px) {
     padding-left: 1.2rem;
     margin: 0.4rem 0;
   }
 
-  @media (max-width: 600px) {
-    padding-left: 1.1rem;
-    margin: 0.35rem 0;
-  }
-
   @media (max-width: 400px) {
     padding-left: 1rem;
     margin: 0.3rem 0;
-  }
-
-  @media (max-width: 320px) {
-    padding-left: 0.9rem;
-    margin: 0.25rem 0;
   }
 `;
 
 const ExpandedListItem = styled.li`
   margin-bottom: 0.5rem;
-  color: ${theme.colors.textLight};
-  max-width: 100%; /* Prevent overflow */
-  overflow-wrap: break-word; /* Break long words to prevent overflow */
-
-  @media (max-width: 1200px) {
-    margin-bottom: 0.45rem;
-  }
-
-  @media (max-width: 1024px) {
-    margin-bottom: 0.4rem;
-  }
+  color: var(--color-text-light);
+  max-width: 100%;
+  overflow-wrap: break-word;
 
   @media (max-width: 768px) {
     margin-bottom: 0.4rem;
   }
 
-  @media (max-width: 600px) {
-    margin-bottom: 0.35rem;
-  }
-
   @media (max-width: 400px) {
     margin-bottom: 0.3rem;
-  }
-
-  @media (max-width: 320px) {
-    margin-bottom: 0.25rem;
   }
 `;
 
 const HighlightedText = styled.span`
-  background-color: ${theme.colors.primary};
-  color: ${theme.colors.textDark};
+  background-color: var(--color-primary);
+  color: var(--color-text-dark);
   padding: 0.1rem 0.3rem;
   border-radius: 3px;
   font-weight: 600;
-  display: inline; /* Ensure inline behavior */
-  overflow-wrap: break-word; /* Break long highlighted text */
+  display: inline;
+  overflow-wrap: break-word;
 
   @media (max-width: 768px) {
     padding: 0.08rem 0.25rem;
@@ -467,7 +236,7 @@ const HighlightedText = styled.span`
   }
 `;
 
-// === Main Component ===
+// Main Component
 const Basics: React.FC = () => {
   const [openSections, setOpenSections] = useState<{ [key: number]: boolean }>({
     0: true, // First section open by default
@@ -669,7 +438,7 @@ const Basics: React.FC = () => {
               <SectionTitle>{section.title}</SectionTitle>
               <ToggleIcon>{openSections[index] ? "−" : "+"}</ToggleIcon>
             </SectionHeader>
-            <SectionContent isOpen={!!openSections[index]}>
+            <SectionContent $isOpen={!!openSections[index]}>
               {section.content}
             </SectionContent>
           </Section>

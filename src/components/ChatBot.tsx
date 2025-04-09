@@ -1,3 +1,4 @@
+// components/ChatBot.tsx
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -9,66 +10,88 @@ import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import { CSSProperties } from "react";
 
-// === Styled Components ===
-const ChatbotContainer = styled.div<{ isOpen: boolean }>`
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1000;
-`;
-
+// Styled Components
 const ChatbotButton = styled.button`
-  background: ${({ theme }) => theme.colors.primary};
+  background: var(--color-primary);
   border: none;
   border-radius: 50%;
   width: 60px;
   height: 60px;
   cursor: pointer;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  color: var(--color-text-dark);
+  font-size: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  transition: background 0.3s ease;
+  z-index: 1001;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.backgroundDark};
+    background: #e0d8c3; // Consider adding as --color-hover in globals.css
+  }
+
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
   }
 `;
 
-const ChatbotPopover = styled.div<{ isOpen: boolean }>`
-  display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
+const ChatWindow = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")};
   flex-direction: column;
   width: 350px;
   height: 450px;
-  background: ${({ theme }) => theme.colors.backgroundContent};
-  border: 1px solid ${({ theme }) => theme.colors.primary};
+  background: var(--color-background-content);
+  border: 1px solid var(--color-primary);
   border-radius: 8px;
-  position: absolute;
-  bottom: 80px;
-  right: 0;
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  z-index: 1000;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 768px) {
+    width: 300px;
+    height: 400px;
+  }
+
+  @media (max-width: 400px) {
+    width: 90%;
+    height: 350px;
+    right: 5%;
+  }
+`;
+
+const ChatHeader = styled.div`
+  background: var(--color-primary);
+  color: var(--color-text-dark);
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
 `;
 
 const ChatHistory = styled.div`
   flex: 1;
   overflow-y: auto;
   padding: 1rem;
-  background: ${({ theme }) => theme.colors.backgroundLight};
+  background: var(--color-background-light);
   border-radius: 4px 4px 0 0;
   scrollbar-width: thin;
-  scrollbar-color: ${({ theme }) =>
-    `${theme.colors.primary} ${theme.colors.backgroundLight}`};
+  scrollbar-color: var(--color-primary) var(--color-background-light);
 
   &::-webkit-scrollbar {
     width: 8px;
   }
 
   &::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.backgroundLight};
+    background: var(--color-background-light);
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.primary};
+    background: var(--color-primary);
     border-radius: 4px;
   }
 `;
@@ -76,8 +99,8 @@ const ChatHistory = styled.div`
 const UserMessage = styled.div`
   padding: 0.5rem 1rem;
   margin: 0.5rem 0;
-  background: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.textDark};
+  background: var(--color-primary);
+  color: var(--color-text-dark);
   border-radius: 8px;
   max-width: 80%;
   align-self: flex-end;
@@ -90,7 +113,7 @@ const UserMessage = styled.div`
 
 const BotMessage = styled.div`
   margin: 0.5rem 0;
-  color: ${({ theme }) => theme.colors.textLight};
+  color: var(--color-text-light);
   max-width: 80%;
   align-self: flex-start;
   overflow-wrap: break-word;
@@ -108,32 +131,32 @@ const ChatInputContainer = styled.div`
   align-items: center;
   gap: 1rem;
   padding: 0.5rem;
-  background: ${({ theme }) => theme.colors.backgroundLight};
-  border-top: 1px solid ${({ theme }) => theme.colors.primary};
+  background: var(--color-background-light);
+  border-top: 1px solid var(--color-primary);
 `;
 
 const ChatInput = styled.input`
   flex: 1;
   padding: 0.5rem;
-  border: 1px solid ${({ theme }) => theme.colors.primary};
+  border: 1px solid var(--color-primary);
   border-radius: 4px;
   font-size: 1rem;
-  background: ${({ theme }) => theme.colors.backgroundLight};
-  color: ${({ theme }) => theme.colors.textLight};
+  background: var(--color-background-light);
+  color: var(--color-text-light);
   outline: none;
   max-width: 100%;
   overflow-wrap: break-word;
 
   &:focus {
-    border-color: ${({ theme }) => theme.colors.primary};
+    border-color: var(--color-primary);
     box-shadow: 0 0 5px rgba(28, 37, 38, 0.3);
   }
 `;
 
 const SendButton = styled.button`
   padding: 0.5rem 1rem;
-  background: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.textDark};
+  background: var(--color-primary);
+  color: var(--color-text-dark);
   border: none;
   border-radius: 4px;
   font-size: 1rem;
@@ -142,11 +165,11 @@ const SendButton = styled.button`
   transition: background 0.3s ease;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.backgroundDark};
+    background: var(--color-background-dark);
   }
 
   &:disabled {
-    background: ${({ theme }) => theme.colors.backgroundDark};
+    background: var(--color-background-dark);
     opacity: 0.5;
     cursor: not-allowed;
   }
@@ -164,6 +187,7 @@ const ErrorMessage = styled.p`
     margin: 0;
   }
 `;
+
 const syntaxHighlighterStyle: { [key: string]: CSSProperties } = vscDarkPlus;
 
 const Chatbot: React.FC = () => {
@@ -174,6 +198,7 @@ const Chatbot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const chatHistoryRef = useRef<HTMLDivElement>(null);
 
+  // Scroll to the bottom of the chat history when new messages are added
   useEffect(() => {
     if (chatHistoryRef.current) {
       chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
@@ -246,7 +271,7 @@ const Chatbot: React.FC = () => {
   };
 
   return (
-    <ChatbotContainer isOpen={isOpen}>
+    <>
       <ChatbotButton onClick={() => setIsOpen(!isOpen)}>
         <Image
           src="/images/brain.png"
@@ -256,8 +281,21 @@ const Chatbot: React.FC = () => {
           style={{ flexShrink: 0 }}
         />
       </ChatbotButton>
-      <ChatbotPopover isOpen={isOpen}>
+      <ChatWindow $isOpen={isOpen}>
+        <ChatHeader>Chatbot</ChatHeader>
         <ChatHistory ref={chatHistoryRef}>
+          {messages.length === 0 && !isLoading && !error && (
+            <BotMessage>
+              <Image
+                src="/images/brain.png"
+                alt="Bot Icon"
+                width={35}
+                height={24}
+                style={{ flexShrink: 0 }}
+              />
+              <p>Welcome to the Prompted Chatbot! How can I assist you today?</p>
+            </BotMessage>
+          )}
           {messages.map((message, index) =>
             message.isUser ? (
               <UserMessage key={index}>
@@ -268,7 +306,7 @@ const Chatbot: React.FC = () => {
             ) : (
               <BotMessage key={index}>
                 <Image
-                  src="/brain.png"
+                  src="/images/brain.png"
                   alt="Bot Icon"
                   width={35}
                   height={24}
@@ -280,19 +318,18 @@ const Chatbot: React.FC = () => {
                     code({ node, className, children, ...props }) {
                       const match = /language-(\w+)/.exec(className || "");
                       return match ? (
-
                         <SyntaxHighlighter
-                        language="javascript"
-                        style={vscDarkPlus}
-                        customStyle={{
-                          marginTop: "1rem",
-                          borderRadius: "4px",
-                          padding: "1rem",
-                          backgroundColor: "#1f2937",
-                          position: "relative",
-                          zIndex: 1,
-                        }}
-                      >
+                          language={match[1]}
+                          style={vscDarkPlus}
+                          customStyle={{
+                            marginTop: "1rem",
+                            borderRadius: "4px",
+                            padding: "1rem",
+                            backgroundColor: "#1f2937",
+                            position: "relative",
+                            zIndex: 1,
+                          }}
+                        >
                           {String(children).replace(/\n$/, "")}
                         </SyntaxHighlighter>
                       ) : (
@@ -339,8 +376,8 @@ const Chatbot: React.FC = () => {
             Send
           </SendButton>
         </ChatInputContainer>
-      </ChatbotPopover>
-    </ChatbotContainer>
+      </ChatWindow>
+    </>
   );
 };
 
