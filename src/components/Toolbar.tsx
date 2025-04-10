@@ -113,7 +113,7 @@ const BurgerIcon = styled.div<{ $isOpen: boolean }>`
   div {
     width: 25px;
     height: 3px;
-    background-color: ${theme.colors.primary};
+    background-color: ${theme.colors.background}; // <-- instead of primary
     border-radius: 2px;
     transition: all 0.3s ease;
   }
@@ -186,7 +186,11 @@ const Toolbar: React.FC = () => {
           <NavLink href="/index-page">Index</NavLink>
           <NavLink href="/faq">FAQ</NavLink>
         </NavLinks>
-        <BurgerIcon $isOpen={isOpen} onClick={toggleMenu}>...</BurgerIcon>
+        <BurgerIcon $isOpen={isOpen} onClick={toggleMenu}>
+          <div />
+          <div />
+          <div />
+        </BurgerIcon>
       </ToolbarContainer>
       <MobileMenu $isOpen={isOpen}>
         <MobileNavLink href="/basics" onClick={toggleMenu}>Basics</MobileNavLink>
