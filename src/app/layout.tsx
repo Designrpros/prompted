@@ -4,12 +4,12 @@ import Toolbar from "../components/Toolbar";
 import Chatbot from "../components/ChatBot";
 import StyledComponentsRegistry from "./styled-components-registry";
 
-// Metadata for the application (without viewport)
+// Metadata for the application
 export const metadata = {
-  title: "Prompted - Your AI-Powered Learning Hub",
-  description: "Explore AI-driven tools, resources, and patterns with Prompted.",
+  title: "Composition - Your Graphic Design Learning Companion",
+  description: "Your learning companion for mastering Figma, graphic design, and essential resources.",
   icons: {
-    icon: "/favicon.ico", // Adjust path if needed
+    icon: "/favicon.ico",
   },
 };
 
@@ -23,10 +23,15 @@ export const viewport = {
 const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <html lang="en">
-      <body>
+      <body
+        style={{
+          marginTop: "80px", // Offset for toolbar width
+          minHeight: "100vh",
+        }}
+      >
         <StyledComponentsRegistry>
           <Toolbar />
-            {children}
+          {children}
           <Chatbot />
         </StyledComponentsRegistry>
       </body>
