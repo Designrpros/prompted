@@ -2,6 +2,7 @@
 import "./globals.css";
 import Toolbar from "../components/Toolbar";
 import Chatbot from "../components/ChatBot";
+import StyledComponentsRegistry from "./styled-components-registry";
 
 // Metadata for the application (without viewport)
 export const metadata = {
@@ -23,9 +24,11 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <Toolbar />
-        {children}
-        <Chatbot />
+        <StyledComponentsRegistry>
+          <Toolbar />
+            {children}
+          <Chatbot />
+        </StyledComponentsRegistry>
       </body>
     </html>
   );

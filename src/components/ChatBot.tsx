@@ -254,19 +254,19 @@ const Chatbot: React.FC = () => {
 
   const handleSend = async () => {
     if (!input.trim()) return;
-
+  
     const userMessage = { text: input, isUser: true };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
     setError(null);
-
+  
     try {
       const apiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY;
       if (!apiKey) {
         throw new Error("OpenRouter API key is not configured");
       }
-
+  
       const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -290,22 +290,24 @@ const Chatbot: React.FC = () => {
           ],
         }),
       });
-
+  
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(`OpenRouter API error: ${response.status} - ${errorText}`);
       }
-
+  
       const data = await response.json();
-      if (!data.choices || !data.choices[0]?.message?.content) {
-        throw new Error("Unexpected API response format");
+      console.log("API Response:", data); // Log the full response for debugging
+  
+      if (!data.choices || !Array.isArray(data.choices) || !data.choices[0]?.message?.content) {
+        throw new Error("Unexpected API response format: " + JSON.stringify(data));
       }
-
+  
       const aiResponse = data.choices[0].message.content;
       setMessages((prev) => [...prev, { text: aiResponse, isUser: false }]);
     } catch (err: any) {
       setError(`Failed to get a response: ${err.message}`);
-      console.error(err);
+      console.error("Error details:", err);
     } finally {
       setIsLoading(false);
     }
