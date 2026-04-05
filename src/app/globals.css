@@ -1,82 +1,458 @@
-/* globals.css */
+/* globals.css - Cyber-Swiss Design System for Prompted 2.0 */
 
+/* === CYBER-SWISS DESIGN TOKENS === */
 :root {
-  /* Theme colors from theme.ts */
-  --color-background-light: #F7F4E9;
-  --color-background-dark: #2A2A2A;
-  --color-background-content: #E8E2D1;
-  --color-primary: #1C2526;
-  --color-text-light: #333333;
-  --color-text-dark: #FFFFFF;
-
-  /* Font families */
-  --font-sans: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "Geist Mono", Menlo, Monaco, "Courier New", monospace;
-
-  /* Default settings */
-  --background: var(--color-background-dark);
-  --text-color: var(--color-text-dark);
+  /* Swiss Base Palette - Grid, Typography, Structure */
+  --color-primary: #0D0D0D;
+  --color-secondary: #1A1A1A;
+  --color-accent-red: #FF3B3B;
+  
+  /* Cyberpunk Accent Colors - Neon High-Tech */
+  --color-cyan: #00F0FF;
+  --color-magenta: #FF00FF;
+  --color-cyan-dim: #00A3AA;
+  --color-magenta-dim: #AA00AA;
+  
+  /* Backgrounds */
+  --color-bg-dark: #0D0D0D;
+  --color-bg-card: #141414;
+  --color-bg-elevated: #1F1F1F;
+  --color-bg-grid: #0A0A0A;
+  
+  /* Text */
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #B0B0B0;
+  --color-text-muted: #606060;
+  
+  /* Borders & Lines - Swiss Grid Emphasis */
+  --color-border: #2A2A2A;
+  --color-border-glow: #00F0FF33;
+  
+  /* Typography - Swiss Massivity */
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  
+  /* Font Sizes - Swiss Scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 3rem;
+  --text-5xl: 4rem;
+  --text-6xl: 6rem;
+  
+  /* Spacing - 8px Grid */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  
+  /* Shadows */
+  --shadow-glow-cyan: 0 0 20px rgba(0, 240, 255, 0.3);
+  --shadow-glow-magenta: 0 0 20px rgba(255, 0, 255, 0.3);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.5);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+  
+  /* Z-Index Scale */
+  --z-base: 1;
+  --z-elevated: 10;
+  --z-sticky: 100;
+  --z-overlay: 1000;
+  --z-modal: 2000;
 }
 
-/* Light mode support */
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: var(--color-background-light);
-    --text-color: var(--color-text-light);
-  }
-}
+/* === TAILWIND V4 COMPATIBILITY === */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-body {
-  background-color: var(--background);
-  color: var(--text-color);
-  font-family: var(--font-sans);
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Mobile optimizations */
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-}
-
-@media (max-width: 768px) {
-  html {
-    font-size: 14px; /* Slightly smaller base font size for mobile */
-  }
-}
-
-@media (max-width: 480px) {
-  html {
-    font-size: 12px; /* Even smaller for very small screens */
-  }
-}
-
-/* Box sizing reset */
+/* === BASE STYLES === */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-/* Remove default margins and padding */
-h1, h2, h3, h4, h5, h6, p, ul, ol {
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
   margin: 0;
   padding: 0;
+  min-height: 100vh;
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
 
-/* Improve touch targets on mobile */
-a, button {
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
+/* === SWISS GRID OVERLAY (Optional - decorative) === */
+.grid-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: 
+    linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
 }
 
-/* Ensure images are responsive */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+/* === TYPOGRAPHY === */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+/* === CYBER GLITCH EFFECT === */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+.glitch-text {
+  position: relative;
+  animation: glitch 0.3s ease infinite;
+  animation-play-state: paused;
+}
+
+.glitch-text:hover {
+  animation-play-state: running;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.glitch-text:hover::before {
+  color: var(--color-cyan);
+  opacity: 0.8;
+  animation: glitch 0.3s ease infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  transform: translate(-2px, -2px);
+}
+
+.glitch-text:hover::after {
+  color: var(--color-magenta);
+  opacity: 0.8;
+  animation: glitch 0.3s ease infinite reverse;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  transform: translate(2px, 2px);
+}
+
+/* === CYBERPUNK GLOW EFFECTS === */
+.glow-cyan {
+  box-shadow: var(--shadow-glow-cyan);
+}
+
+.glow-magenta {
+  box-shadow: var(--shadow-glow-magenta);
+}
+
+.glow-border-cyan {
+  border: 1px solid var(--color-cyan);
+  box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.1), var(--shadow-glow-cyan);
+}
+
+.glow-border-magenta {
+  border: 1px solid var(--color-magenta);
+  box-shadow: inset 0 0 10px rgba(255, 0, 255, 0.1), var(--shadow-glow-magenta);
+}
+
+/* === NEON TEXT === */
+.neon-text-cyan {
+  color: var(--color-cyan);
+  text-shadow: 
+    0 0 5px var(--color-cyan),
+    0 0 10px var(--color-cyan),
+    0 0 20px var(--color-cyan-dim);
+}
+
+.neon-text-magenta {
+  color: var(--color-magenta);
+  text-shadow: 
+    0 0 5px var(--color-magenta),
+    0 0 10px var(--color-magenta),
+    0 0 20px var(--color-magenta-dim);
+}
+
+/* === PROMPT BLOCK STYLES === */
+.prompt-block {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.prompt-block:hover {
+  border-color: var(--color-cyan);
+  box-shadow: var(--shadow-glow-cyan);
+}
+
+.prompt-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg-elevated);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.prompt-block-content {
+  padding: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.prompt-block-content code {
+  background: var(--color-bg-dark);
+  padding: var(--space-1) var(--space-2);
+  border-radius: 2px;
+  color: var(--color-cyan);
+}
+
+/* === BUTTON STYLES === */
+.btn-cyber {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  background: transparent;
+  border: 1px solid var(--color-cyan);
+  color: var(--color-cyan);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-cyber::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.2), transparent);
+  transition: left var(--transition-base);
+}
+
+.btn-cyber:hover::before {
+  left: 100%;
+}
+
+.btn-cyber:hover {
+  background: rgba(0, 240, 255, 0.1);
+  box-shadow: var(--shadow-glow-cyan);
+}
+
+.btn-cyber:active {
+  transform: scale(0.98);
+}
+
+.btn-cyber-filled {
+  background: var(--color-cyan);
+  color: var(--color-bg-dark);
+}
+
+.btn-cyber-filled:hover {
+  background: var(--color-text-primary);
+}
+
+/* === CARD STYLES === */
+.card-cyber {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  padding: var(--space-6);
+  transition: all var(--transition-base);
+}
+
+.card-cyber:hover {
+  border-color: var(--color-cyan);
+  transform: translateY(-2px);
+}
+
+.card-cyber-elevated {
+  background: var(--color-bg-elevated);
+  box-shadow: var(--shadow-card);
+}
+
+/* === SECTION STYLES === */
+.section-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-6);
+}
+
+.section-header {
+  grid-column: span 12;
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-4);
+  border-bottom: 2px solid var(--color-cyan);
+}
+
+/* === AGENT FLOW CHART STYLES === */
+.agent-node {
+  background: var(--color-bg-elevated);
+  border: 2px solid var(--color-border);
+  padding: var(--space-4) var(--space-6);
+  min-width: 160px;
+  text-align: center;
+  position: relative;
+  transition: all var(--transition-base);
+}
+
+.agent-node:hover {
+  border-color: var(--color-cyan);
+  box-shadow: var(--shadow-glow-cyan);
+}
+
+.agent-node-cyan {
+  border-color: var(--color-cyan);
+}
+
+.agent-node-magenta {
+  border-color: var(--color-magenta);
+}
+
+.agent-connector {
+  stroke: var(--color-border);
+  stroke-width: 2;
+  fill: none;
+  marker-end: url(#arrowhead-cyan);
+}
+
+.agent-connector-active {
+  stroke: var(--color-cyan);
+  filter: drop-shadow(0 0 4px var(--color-cyan));
+}
+
+/* === RESPONSIVE UTILITIES === */
+@media (max-width: 1024px) {
+  .section-grid {
+    grid-template-columns: repeat(8, 1fr);
+  }
+  
+  .section-header {
+    grid-column: span 8;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --text-4xl: 2.25rem;
+    --text-5xl: 3rem;
+    --text-6xl: 4rem;
+  }
+  
+  .section-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+  }
+  
+  .section-header {
+    grid-column: span 4;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --text-3xl: 1.5rem;
+    --text-4xl: 1.875rem;
+    --text-5xl: 2.25rem;
+  }
+  
+  .section-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-header {
+    grid-column: span 1;
+  }
+}
+
+/* === SCROLLBAR STYLING === */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-cyan-dim);
+}
+
+/* === SELECTION === */
+::selection {
+  background: var(--color-cyan);
+  color: var(--color-bg-dark);
+}
+
+/* === FOCUS STATES === */
+:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 2px;
 }
